@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['smarttrash-production.up.railway.app']
 CSRF_TRUSTED_ORIGINS = ['https://smarttrash-production.up.railway.app/']
+CORS_ALLOWED_ORIGINS=['https://smarttrash-production.up.railway.app/']
 
 
 

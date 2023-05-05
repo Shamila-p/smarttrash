@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     return render(request, 'index.html')
-
+@csrf_exempt
 def contact_us(request):
     if request.method == 'POST':
         first_name=request.POST['first_name']
@@ -26,7 +26,6 @@ def contact_us(request):
         recipient_list = ['prolog586@gmail.com']
         send_mail(subject, message, email_from, recipient_list)
         return redirect('index')
-
 def customer(request):
     if request.method == 'GET':
         if request.user.is_authenticated and request.user.role == User.CUSTOMER:
@@ -34,7 +33,7 @@ def customer(request):
         else:
             return redirect('customer_login')
 
-
+@csrf_exempt
 def customer_login(request):
     if request.method == 'GET':
         if request.user.is_authenticated and request.user.role == User.CUSTOMER:
@@ -60,7 +59,7 @@ def agent(request):
         else:
             return redirect('agent_login')
 
-
+@csrf_exempt
 def agent_login(request):
     if request.method == 'GET':
         if request.user.is_authenticated and request.user.role == User.COLLECTION_AGENT:
@@ -86,7 +85,7 @@ def municipality(request):
         else:
             return redirect('municipality_login')
 
-
+@csrf_exempt
 def municipality_login(request):
     if request.method == 'GET':
         if request.user.is_authenticated and request.user.role == User.MUNICIPALITY:
@@ -112,7 +111,7 @@ def recycler(request):
         else:
             return redirect('recycler_login')
 
-
+@csrf_exempt
 def recycler_login(request):
     if request.method == 'GET':
         if request.user.is_authenticated and request.user.role == User.RECYCLER:
@@ -161,7 +160,7 @@ def logout(request):
     auth.logout(request)
     return redirect('index')
 
-
+@csrf_exempt
 def customer_signup(request):
     if request.method == 'GET':
         municipalities = User.objects.filter(role=User.MUNICIPALITY)
@@ -200,7 +199,7 @@ def customer_signup(request):
             return redirect('customer_login')
         return redirect('customer_signup')
 
-
+@csrf_exempt
 def agent_signup(request):
     if request.method == 'GET':
         municipalities = User.objects.filter(role=User.MUNICIPALITY)
@@ -278,7 +277,7 @@ def agent_signup(request):
 #             return redirect('recycler_login')
 #         return redirect('recycler_signup')
 
-
+@csrf_exempt
 def forgot_password(request):
     if request.method == 'GET':
         return render(request, 'forgot_password.html')
@@ -298,7 +297,7 @@ def forgot_password(request):
             return redirect('index')
         return redirect('forgot_password')
 
-
+@csrf_exempt
 def reset_password(request, reset_id):
     if request.method == 'GET':
         if not ForgotPassword.objects.filter(id=reset_id).exists():

@@ -6,6 +6,8 @@ from smartbin.models import SmartBin
 from home.models import WasteAmount
 from wallet.models import Wallet
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 @login_required
@@ -24,6 +26,7 @@ def smartbin(request):
 
 
 @login_required
+@csrf_exempt
 def link_bin(request):
     if not (request.user.role == User.CUSTOMER):
         return HttpResponse('Unauthorized', status=401)
@@ -39,6 +42,7 @@ def link_bin(request):
         return redirect('smartbin')
 
 @login_required
+@csrf_exempt
 def unlink_bin(request):
     if not (request.user.role == User.CUSTOMER):
         return HttpResponse('Unauthorized', status=401)
@@ -52,6 +56,7 @@ def unlink_bin(request):
 
 
 @login_required
+@csrf_exempt
 def smartbin_collect_verify(request):
     if not (request.user.role == User.CUSTOMER):
         return HttpResponse('Unauthorized', status=401)

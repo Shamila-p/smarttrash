@@ -2,6 +2,8 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
 from accounts.models import User
 from home.models import RecyclerAmount, WasteAmount
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 @login_required
@@ -22,6 +24,7 @@ def home(request):
 
 
 @login_required
+@csrf_exempt
 def set_waste_amount(request):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -37,6 +40,7 @@ def set_waste_amount(request):
         return redirect('set_waste_amount')
 
 @login_required
+@csrf_exempt
 def set_recycler_amount(request):
     if not (request.user.role == User.RECYCLER):
         return HttpResponse('Unauthorized', status=401)

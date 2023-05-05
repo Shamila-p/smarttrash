@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
 
 
 @csrf_exempt
@@ -34,6 +35,8 @@ def booking_create(request):
 
 
 @login_required
+@csrf_exempt
+
 def manual_booking(request):
     if not (request.user.role == User.CUSTOMER):
         return HttpResponse('Unauthorized', status=401)
@@ -51,6 +54,8 @@ def manual_booking(request):
 
 
 @login_required
+@csrf_exempt
+
 def list_booking(request):
     if not (request.user.role == User.COLLECTION_AGENT or request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -70,12 +75,16 @@ def list_booking(request):
                        'bookings': bookings, 'add_button_name': 'COLLECT', 'add_button_url_name': 'collect','location':location}
         return render(request, 'list_booking.html', context)
 
+@csrf_exempt
+
 def navigate_view(request, location_id):
     location = UserLocation.objects.get(id=location_id)
     return redirect('https://www.google.com/maps/dir/?api=1&destination={0},{1}'.format(location.latitude, location.longitude))
 
 
 @login_required
+@csrf_exempt
+
 def detailed_view(request, booking_id):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -97,6 +106,8 @@ def detailed_view(request, booking_id):
 
 
 @login_required
+@csrf_exempt
+
 def collect(request):
     if not (request.user.role == User.COLLECTION_AGENT):
         return HttpResponse('Unauthorized', status=401)

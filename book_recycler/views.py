@@ -5,9 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from home.models import RecyclerAmount
 from wallet.models import Wallet
+from django.views.decorators.csrf import csrf_exempt
+
 # Create your views here.
 
-
+@csrf_exempt
 def recycler_booking(request):
     if request.method == 'GET':
         if User.objects.filter(municipality_id=request.user.municipality_id, role=User.RECYCLER).exists():
@@ -37,6 +39,7 @@ def recycler_booking(request):
                                        status=RecyclerBooking.PENDING, user_id=request.user.id, recycler_id=recycler.id)
         return redirect('recycler_booking')
 
+@csrf_exempt
 
 def list_recycler_booking(request):
     if not (request.user.role == User.RECYCLER or request.user.role == User.COLLECTION_AGENT):
@@ -60,6 +63,8 @@ def list_recycler_booking(request):
 
 
 @login_required
+@csrf_exempt
+
 def recycler_booking_detailed_view(request, recycler_booking_id):
     if not (request.user.role == User.RECYCLER):
         return HttpResponse('Unauthorized', status=401)
@@ -80,6 +85,7 @@ def recycler_booking_detailed_view(request, recycler_booking_id):
         recycler_booking.save()
         return redirect('recycler_booking_detailed_view', recycler_booking_id=recycler_booking_id)
 
+@csrf_exempt
 
 def recycler_collect(request, recycler_booking_id):
     if not (request.user.role == User.COLLECTION_AGENT):
@@ -90,6 +96,7 @@ def recycler_collect(request, recycler_booking_id):
         recycler_booking.save()
         return redirect('list_recycler_booking')
 
+@csrf_exempt
 
 def recycler_verify(request, recycler_booking_id):
     if not (request.user.role == User.RECYCLER):
@@ -119,6 +126,7 @@ def recycler_verify(request, recycler_booking_id):
             messages.info(request, 'Insufficient money in wallet')
         return redirect('list_recycler_booking')
 
+@csrf_exempt
 
 def recycler_history(request):
     if not (request.user.role == User.RECYCLER or request.user.role == User.CUSTOMER or request.user.role == User.COLLECTION_AGENT):

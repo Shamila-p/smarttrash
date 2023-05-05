@@ -6,6 +6,7 @@ from home.models import RecyclerAmount, WasteAmount
 from smartbin.models import SmartBin
 from django.contrib import messages
 from wallet.models import Wallet
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -31,6 +32,7 @@ def profile(request):
 
 
 @login_required
+@csrf_exempt
 def profile_edit(request):
     if not (request.user.role == User.CUSTOMER or request.user.role == User.COLLECTION_AGENT or request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -85,6 +87,8 @@ def profile_edit(request):
 
 
 @login_required
+@csrf_exempt
+
 def change_password(request):
     if not (request.user.role == User.CUSTOMER or request.user.role == User.COLLECTION_AGENT or request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -116,6 +120,8 @@ def list_customer(request):
 
 
 @login_required
+@csrf_exempt
+
 def add_customer(request):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -152,8 +158,9 @@ def add_customer(request):
             return redirect('list_customer')
         return redirect('add_customer')
 
-
 @login_required
+@csrf_exempt
+
 def remove_customer(request, user_id):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -164,6 +171,8 @@ def remove_customer(request, user_id):
 
 
 @login_required
+@csrf_exempt
+
 def change_status_customer(request, user_id):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -175,6 +184,8 @@ def change_status_customer(request, user_id):
 
 
 @login_required
+@csrf_exempt
+
 def list_agent(request):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -191,6 +202,8 @@ def list_agent(request):
 
 
 @login_required
+@csrf_exempt
+
 def add_agent(request):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -234,6 +247,8 @@ def add_agent(request):
 
 
 @login_required
+@csrf_exempt
+
 def remove_agent(request, user_id):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -246,6 +261,8 @@ def remove_agent(request, user_id):
 
 
 @login_required
+@csrf_exempt
+
 def change_status_agent(request, user_id):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -257,6 +274,8 @@ def change_status_agent(request, user_id):
 
 
 @login_required
+@csrf_exempt
+
 def list_municipalities(request):
     if not (request.user.role == User.ADMIN):
         return HttpResponse('Unauthorized', status=401)
@@ -268,6 +287,8 @@ def list_municipalities(request):
 
 
 @login_required
+@csrf_exempt
+
 def add_municipalities(request):
     if not (request.user.role == User.ADMIN):
         return HttpResponse('Unauthorized', status=401)
@@ -301,6 +322,8 @@ def add_municipalities(request):
 
 
 @login_required
+@csrf_exempt
+
 def remove_municipalities(request, user_id):
     if not (request.user.role == User.ADMIN):
         return HttpResponse('Unauthorized', status=401)
@@ -311,6 +334,8 @@ def remove_municipalities(request, user_id):
 
 
 @login_required
+@csrf_exempt
+
 def change_status_municipalities(request, user_id):
     if not (request.user.role == User.ADMIN):
         return HttpResponse('Unauthorized', status=401)
@@ -322,6 +347,8 @@ def change_status_municipalities(request, user_id):
 
 
 @login_required
+@csrf_exempt
+
 def list_recyclers(request):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -337,6 +364,8 @@ def list_recyclers(request):
 
 
 @login_required
+@csrf_exempt
+
 def add_recyclers(request):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -373,6 +402,8 @@ def add_recyclers(request):
 
 
 @login_required
+@csrf_exempt
+
 def remove_recycler(request, user_id):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -383,6 +414,8 @@ def remove_recycler(request, user_id):
 
 
 @login_required
+@csrf_exempt
+
 def change_status_recycler(request, user_id):
     if not (request.user.role == User.MUNICIPALITY):
         return HttpResponse('Unauthorized', status=401)
@@ -392,7 +425,11 @@ def change_status_recycler(request, user_id):
         user.save()
         return redirect('list_recyclers')
 
+
+@csrf_exempt
+
 def add_location(request):
+    
     if request.method == 'POST':
         name = request.POST['name']
         latitude = request.POST['latitude']

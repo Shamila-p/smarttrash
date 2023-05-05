@@ -3,6 +3,7 @@ from accounts.models import  User
 from wallet.models import Wallet
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
@@ -16,6 +17,7 @@ def wallet(request):
         return render(request,'wallet.html',context)
 
 @login_required
+@csrf_exempt
 def add_wallet(request):
     if not (request.user.role == User.MUNICIPALITY or request.user.role == User.CUSTOMER or request.user.role == User.RECYCLER or request.user.role == User.COLLECTION_AGENT):
         return HttpResponse('Unauthorized', status=401)
