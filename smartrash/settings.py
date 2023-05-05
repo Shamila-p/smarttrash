@@ -48,10 +48,12 @@ INSTALLED_APPS = [
     'booking.apps.BookingConfig',
     'book_recycler.apps.BookRecyclerConfig',
     'help.apps.HelpConfig',
+    'corsheaders'
 ]
 AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
