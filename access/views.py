@@ -9,7 +9,7 @@ from wallet.models import Wallet
 from django.core.mail import send_mail
 from django.conf import settings
 import uuid
-
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     return render(request, 'index.html')
@@ -138,7 +138,7 @@ def admin(request):
         else:
             return redirect('admin_login')
 
-
+@csrf_exempt
 def admin_login(request):
     if request.method == 'GET':
         if request.user.is_authenticated and request.user.role == User.ADMIN:
