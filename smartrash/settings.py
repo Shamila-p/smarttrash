@@ -179,5 +179,5 @@ EMAIL_HOST_PASSWORD = 'cltuqmwhcqehuskc'
 SERVER_URL='http://127.0.0.1:8000'
 
 
-CSRF_TRUSTED_ORIGINS = ['smarttrash-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://smarttrash-production.up.railway.app/']
 
