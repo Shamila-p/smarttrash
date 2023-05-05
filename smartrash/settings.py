@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-)xf(un%q#&5_7i09xvc2@!v=ivks!$9_gn=t1@cwh(o9nmf_#*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['smarttrash-production.up.railway.app']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -177,3 +177,7 @@ EMAIL_HOST_PASSWORD = 'cltuqmwhcqehuskc'
 
 
 SERVER_URL='http://127.0.0.1:8000'
+
+
+CSRF_TRUSTED_ORIGINS = ['smarttrash-production.up.railway.app']
+
